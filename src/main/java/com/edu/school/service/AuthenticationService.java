@@ -44,9 +44,12 @@ public class AuthenticationService {
 		if(!(passwordValidation(signUpRequest.getPassword()))){
 			throw new CustomException("password is not valid",ErrorType.INVALID_PASSWORD);
 		}
-    	if (userRepository.existsByEmail(signUpRequest.getEmail()) || tutorRepository.existsByEmail(signUpRequest.getEmail()) || studentRepository.existsByEmail(signUpRequest.getEmail())) {
+    	if (userRepository.existsByEmail(signUpRequest.getEmail())) {
             throw new CustomException("Email already exists", ErrorType.EMAIL_ALREADY_REGISTERED);
         }
+    	if(!studentRepository.existsByEmail(signUpRequest.getEmail())) {
+    		throw new CustomException("Email is not Allowed", ErrorType.INVALID_EMAIL);
+    	}
     	
         User user =  new User();
         user.setName(signUpRequest.getName());
@@ -65,9 +68,13 @@ public class AuthenticationService {
 		if(!(passwordValidation(signUpRequest.getPassword()))){
 			throw new CustomException("password is not valid",ErrorType.INVALID_PASSWORD);
 		}
-    	if (userRepository.existsByEmail(signUpRequest.getEmail()) || tutorRepository.existsByEmail(signUpRequest.getEmail()) || studentRepository.existsByEmail(signUpRequest.getEmail())) {
+    	if (userRepository.existsByEmail(signUpRequest.getEmail())) {
             throw new CustomException("Email already exists", ErrorType.EMAIL_ALREADY_REGISTERED);
         }
+    	if(!tutorRepository.existsByEmail(signUpRequest.getEmail())) {
+    		throw new CustomException("Email is not Allowed", ErrorType.INVALID_EMAIL);
+    	}
+    	
     	
         User user =  new User();
         user.setName(signUpRequest.getName());
@@ -85,7 +92,7 @@ public class AuthenticationService {
 		if(!(passwordValidation(signUpRequest.getPassword()))){
 			throw new CustomException("password is not valid",ErrorType.INVALID_PASSWORD);
 		}
-    	if (userRepository.existsByEmail(signUpRequest.getEmail()) || tutorRepository.existsByEmail(signUpRequest.getEmail()) || studentRepository.existsByEmail(signUpRequest.getEmail())) {
+    	if (userRepository.existsByEmail(signUpRequest.getEmail())) {
             throw new CustomException("Email already exists", ErrorType.EMAIL_ALREADY_REGISTERED);
         }
     	
@@ -105,7 +112,7 @@ public class AuthenticationService {
 		if(!(passwordValidation(signUpRequest.getPassword()))){
 			throw new CustomException("password is not valid",ErrorType.INVALID_PASSWORD);
 		}
-    	if (userRepository.existsByEmail(signUpRequest.getEmail()) || tutorRepository.existsByEmail(signUpRequest.getEmail()) || studentRepository.existsByEmail(signUpRequest.getEmail())) {
+    	if (userRepository.existsByEmail(signUpRequest.getEmail())) {
             throw new CustomException("Email already exists", ErrorType.EMAIL_ALREADY_REGISTERED);
         }
     	
