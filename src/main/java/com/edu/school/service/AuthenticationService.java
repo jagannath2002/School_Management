@@ -16,8 +16,6 @@ import com.edu.school.DTO.SignUpRequest;
 import com.edu.school.entity.User;
 import com.edu.school.exception.CustomException;
 import com.edu.school.exception.CustomException.ErrorType;
-import com.edu.school.exception.EmailNotFoundException;
-import com.edu.school.exception.InvalidCredentialsException;
 import com.edu.school.repository.StudentRepository;
 import com.edu.school.repository.TutorRepository;
 import com.edu.school.repository.UserRepository;
@@ -126,14 +124,14 @@ public class AuthenticationService {
     
     public JwtAuthenticationResponse signIn(LogInRequest logInRequest){
     	
-        var user = userRepository.findByEmail(logInRequest.getEmail()).orElseThrow(() -> new EmailNotFoundException("Invalid email"));
+        var user = userRepository.findByEmail(logInRequest.getEmail()).orElseThrow(() -> new CustomException("email is not valid",ErrorType.INVALID_EMAIL));
         
         try {
         	 authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(logInRequest.getEmail(),
              		logInRequest.getPassword()));
         }
         catch (AuthenticationException e) {
-            throw new InvalidCredentialsException("Invalid password");
+        	throw new CustomException("password is not valid",ErrorType.INVALID_PASSWORD);
         }
         
         var jwt = jwtService.generateToken(user);
